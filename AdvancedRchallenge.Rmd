@@ -1,0 +1,55 @@
+---
+title: "AdvancedR_challenges"
+author: "Mark_y.boi"
+date: '2022-08-31'
+output:
+  html_document: default
+  'html_document:': default
+---
+Load in the iris data make sure you've got  tidyverse, dplyr and gapminder(remember to create a a data subset for the gapminder data)
+```{r message=FALSE, warning=FALSE}
+library(dplyr)
+library(tidyverse)
+library(datasets)
+library(gapminder)
+by_year= gapminder %>% group_by(year) %>% summarize(medianGdpPerCap=median(gdpPercap))
+
+data("iris")
+summary(iris)
+```
+
+
+
+# challenges
+
+Use both filter() and select() to create a subset of data frame that contains sepal length of value more than 5, sepal width and species
+
+```{r}
+iris_new = iris %>% filter(Sepal.Length>5) %>% select(Sepal.Width, Species)
+summary(iris_new)
+```
+
+
+Use group_by(), summarize(), mean(), sd(), min(), max() to calculate the mean, standard deviation, get maximum value, minimum value of each Species’ Sepal.Width
+
+```{r}
+grouped_new= iris %>% group_by(Species) %>% summarize(mean_sepal_width = mean(Sepal.Width), Sd_sepal_width= sd(Sepal.Width), 
+                                                      max_sepal = max(Sepal.Width), min_sepal= min(Sepal.Width)) 
+summary(grouped_new)
+```
+
+Use group_by(), mutate(), summarize(), mean(), sd(), min(), max() to calculate the mean, sd, find maximum and minimum of a new column of variable called SPlength where the Sepal.Length is divided by Petal.Length
+
+```{r}
+length_new = iris %>% group_by(Species) %>% mutate(SPlength=Sepal.Length/Petal.Length) %>% summarise(mean_splength=mean(SPlength), strdevt_splength=sd(SPlength), max(SPlength), min(SPlength))
+summary(length_new)
+```  
+
+## My plots
+```{r}
+scatterplot = ggplot(iris, aes(x=Petal.Length, y=Petal.Width, color= Species, size = Sepal.Length )) +
+  geom_point() + facet_wrap(~Species)
+scatterplot
+line_plot = ggplot(by_year, aes(x =year, y= medianGdpPerCap)) +geom_point() +expand_limits(y =0)
+line_plot
+```
