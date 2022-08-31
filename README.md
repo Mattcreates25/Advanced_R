@@ -1,2 +1,3 @@
 # Advanced_R
-understanding R and R markdown
+## __understanding R and R markdown__
+The ```AdvancedRchallenge.Rmd``` knitted in Rstudio should generate the ```AdvancedRchallenge.html```
